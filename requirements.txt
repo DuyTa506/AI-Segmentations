@@ -1,0 +1,12 @@
+opendatasets
+numpy
+matplotlib
+csv
+pandas
+torch
+torchvision
+sklearn
+pillow
+tqdm
+timm
+# tensorboard

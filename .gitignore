@@ -1,0 +1,6 @@
+*/__pycache__
+**/__pycache__
+*/runs/model_best.pth
+*/annotation
+*/cityscapes/**
+*/weights
