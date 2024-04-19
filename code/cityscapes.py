@@ -16,8 +16,6 @@ class CityscapesLoader(data.Dataset):
     Data is derived from CityScapes, and can be downloaded from here:
     https://www.cityscapes-dataset.com/downloads/
 
-    Thanks to @fvisin for the loader repo:
-    https://github.com/fvisin/dataset_loaders/blob/master/dataset_loaders/images/cityscapes.py
     """
     colors = [  # [  0,   0,   0],
         [128, 64, 128],
