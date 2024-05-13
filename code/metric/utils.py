@@ -17,7 +17,7 @@ class AverageMeter(object):
         self.count += n
         self.avg = self.sum / self.count
 
-def intersectionAndUnionGPU(output, target, K, ignore_index=255):
+def intersectionAndUnionGPU(output, target, K, ignore_index=250):
     # 'K' classes, output and target sizes are N or N * L or N * H * W, each value in range 0 to K - 1.
     assert (output.dim() in [1, 2, 3])
     assert output.shape == target.shape

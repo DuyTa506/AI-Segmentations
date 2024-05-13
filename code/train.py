@@ -1,5 +1,7 @@
 from models.FCN import Custom_FCN
 from models.Unet import UNet
+#from models.PSPNet import PSPNet
+from models.DeepLabv3 import DeepLabv3_plus
 from models.Unet_Backbone import Unet_Backbone
 from cityscapes import CityscapesLoader
 from utils.augumentations import *
@@ -22,8 +24,8 @@ device = torch.device("cuda:0" if torch.cuda.is_available() else "cpu")
 
 # Define hyperparameters
 net_h, net_w = 256, 512
-batch_size = 10
-n_epochs = 100
+batch_size = 5
+n_epochs = 200
 n_classes = 19
 
 # Data augmentation
@@ -44,24 +46,25 @@ val_data = CityscapesLoader(local_path, split="val", is_transform=True, augmenta
 # val_subset = Subset(val_data, range(val_data_size // 2))
 
 trainloader = DataLoader(train_data, batch_size=batch_size, shuffle=True, num_workers=0)
-valloader = DataLoader(val_data, batch_size=batch_size, shuffle=False, num_workers=0)
+valloader = DataLoader(val_data, batch_size=2, shuffle=False, num_workers=0)
 
 model_name = "unet"
 # Initialize model, loss function, and optimizer
 if model_name == "unet" :
     model = UNet(n_classes=n_classes)
-    model.load_state_dict(torch.load("/app/duy55/segmentation/code/runs/model_best.pth"))
+    #model.load_state_dict(torch.load("/app/duy55/segmentation/code/runs/model_best.pth"))
     model.to(device)
 elif model_name == "fcn" : 
     model = Custom_FCN(n_classes=n_classes).to(device)
 elif model_name == "re_unet" : 
     model = Unet_Backbone(n_classes=n_classes).to(device)
-
+elif model_name == "PSP" : 
+    model = PSPNet(layers=50, classes=n_classes).to(device)
+elif model_name == "DeepLab" : 
+    model = model = DeepLabv3_plus(n_classes=n_classes, pretrained = False, _print = True).to(device)
 optimizer = optim.Adam(model.parameters(), lr=1e-4)
-scheduler = ReduceLROnPlateau(optimizer, mode='min', factor=0.5, patience=5, verbose=True)
 
-
-log_dir = "/app/duy55/segmentation/code/runs"
+log_dir = "/app/duy55/segmentation/code/runs/Unet"
 writer = SummaryWriter(log_dir=log_dir)
 
 
