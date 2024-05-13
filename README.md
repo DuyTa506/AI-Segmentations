@@ -45,7 +45,7 @@ pip install -r requirements.txt
 ### Inference
 
 ```cmd
-usage: inference.py
+usage: test.py
 
 ```
 
